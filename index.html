@@ -1,1 +1,503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pour ma reine 🤍</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #08080d;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+      animation: fadeIn .8s ease;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 430px;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 18px;
+      line-height: 1.15;
+    }
+
+    h2 {
+      font-size: 27px;
+      margin-bottom: 18px;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #e7e7ec;
+    }
+
+    .small {
+      font-size: 14px;
+      opacity: .65;
+      margin-top: 18px;
+    }
+
+    .heart {
+      font-size: 85px;
+      animation: beat 1.4s infinite;
+      margin-bottom: 20px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 50px;
+      padding: 15px 25px;
+      margin-top: 28px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #ff4d79, #ff174f);
+      box-shadow: 0 10px 35px rgba(255, 23, 79, .3);
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(.96);
+    }
+
+    .distance {
+      font-size: 35px;
+      margin: 30px 0;
+      letter-spacing: 3px;
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .photos img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.35);
+    }
+
+    .secret {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 25px 20px;
+      border-radius: 25px;
+      margin-top: 25px;
+      backdrop-filter: blur(10px);
+    }
+
+    .secret p {
+      display: none;
+    }
+
+    .secret.open p {
+      display: block;
+      animation: fadeIn 1s ease;
+    }
+
+    .secret.open button {
+      display: none;
+    }
+
+    .final-heart {
+      font-size: 100px;
+      animation: beat 1.2s infinite;
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      color: white;
+      opacity: .5;
+      animation: float 7s linear infinite;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 20px;
+      pointer-events: none;
+      animation: rise 6s linear forwards;
+      z-index: 10;
+    }
+
+    .music {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 50;
+      width: 43px;
+      height: 43px;
+      padding: 0;
+      margin: 0;
+      border-radius: 50%;
+      font-size: 18px;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.13); }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: .8;
+      }
+      to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-20vh);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    🎵 MUSIQUE
+    Remplace le lien ci-dessous par un fichier MP3 que tu possèdes.
+    Exemple :
+    <audio id="music" src="musique.mp3" loop></audio>
+  -->
+  <audio id="music" loop></audio>
+
+  <button class="music" onclick="toggleMusic()">🎵</button>
+
+  <!-- ÉCRAN 1 -->
+  <section class="screen active">
+    <div class="stars"></div>
+
+    <div class="content">
+      <div class="heart">❤️</div>
+
+      <h1>Attends…</h1>
+
+      <p>
+        Avant de fermer cette page…<br>
+        j'ai préparé quelque chose spécialement pour toi.
+      </p>
+
+      <p class="small">
+        Même avec la distance entre nous 🤍
+      </p>
+
+      <button onclick="nextScreen()">
+        Ouvrir ma surprise 🤍
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ÉCRAN 2 -->
+  <section class="screen">
+    <div class="stars"></div>
+
+    <div class="content">
+      <h2>Ma reine 🤍</h2>
+
+      <p>
+        Il y a peut-être des kilomètres entre nous…
+        mais tu arrives quand même à être présente
+        dans mes journées.
+      </p>
+
+      <div class="distance">
+        🫶🏽 ───────── 🤍
+      </div>
+
+      <p>
+        La distance nous sépare physiquement,
+        mais elle n'a jamais réussi à effacer
+        ce qu'on partage.
+      </p>
+
+      <button onclick="nextScreen()">
+        Continue 🤍
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ÉCRAN 3 -->
+  <section class="screen">
+    <div class="content">
+
+      <h2>Nos petits moments 📱❤️</h2>
+
+      <p>
+        Nos appels, nos messages, nos délires,
+        nos « tu me manques »,
+        nos petites disputes 😭
+        et tous ces moments qui n'appartiennent qu'à nous.
+      </p>
+
+      <!--
+        📸 REMPLACE LES 4 URL PAR TES PHOTOS
+        Exemple :
+        src="photo1.jpg"
+      -->
+
+      <div class="photos">
+
+        <img src="https://placehold.co/500x700?text=Photo+1"
+             alt="Notre souvenir">
+
+        <img src="https://placehold.co/500x700?text=Photo+2"
+             alt="Notre souvenir">
+
+        <img src="https://placehold.co/500x700?text=Photo+3"
+             alt="Notre souvenir">
+
+        <img src="https://placehold.co/500x700?text=Photo+4"
+             alt="Notre souvenir">
+
+      </div>
+
+      <button onclick="nextScreen()">
+        J'ai encore quelque chose à te dire 🥹
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- ÉCRAN 4 -->
+  <section class="screen">
+    <div class="content">
+
+      <h2>🔐 Message secret</h2>
+
+      <p>
+        Ouvre seulement si je te manque…
+      </p>
+
+      <div class="secret" id="secret">
+
+        <button onclick="openSecret()">
+          🔐 Ouvrir
+        </button>
+
+        <p>
+          Si tu lis ça parce que je te manque…
+          ferme les yeux quelques secondes. 🤍
+          <br><br>
+
+          Imagine que je suis juste à côté de toi,
+          que je te regarde et que je te dis doucement :
+          <br><br>
+
+          <strong>
+            « Je suis peut-être loin physiquement,
+            mais je suis avec toi de toutes les façons
+            qui comptent. » ❤️
+          </strong>
+        </p>
+
+      </div>
+
+      <button onclick="nextScreen()">
+        Encore une dernière chose ❤️
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- ÉCRAN 5 -->
+  <section class="screen">
+    <div class="content">
+
+      <div class="final-heart">❤️</div>
+
+      <h2>Pour toi, Mariama 🤍</h2>
+
+      <p>
+        La distance, c'est temporaire.
+        <br><br>
+
+        Mais les souvenirs qu'on crée ensemble,
+        eux, restent.
+        <br><br>
+
+        Alors en attendant le jour où je pourrai
+        enfin te prendre dans mes bras…
+        je continuerai de prendre soin de nous
+        à travers chaque appel,
+        chaque message et chaque petit moment.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>
+          À distance aujourd'hui,<br>
+          à tes côtés demain. 🫂❤️
+        </strong>
+      </p>
+
+      <p class="small">
+        PS : oui, tout ça était juste pour te faire sourire 😭❤️
+      </p>
+
+    </div>
+  </section>
+
+
+  <script>
+
+    let currentScreen = 0;
+    const screens = document.querySelectorAll(".screen");
+
+    function nextScreen() {
+
+      screens[currentScreen].classList.remove("active");
+
+      currentScreen++;
+
+      if (currentScreen >= screens.length) {
+        currentScreen = screens.length - 1;
+      }
+
+      screens[currentScreen].classList.add("active");
+
+      createHearts();
+    }
+
+
+    function openSecret() {
+
+      document.getElementById("secret").classList.add("open");
+
+      createHearts();
+    }
+
+
+    function createHearts() {
+
+      for (let i = 0; i < 8; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.className = "floating-heart";
+
+        heart.innerHTML = ["❤️","🤍","💕","💗","💖"][Math.floor(Math.random() * 5)];
+
+        heart.style.left = Math.random() * 100 + "vw";
+
+        heart.style.animationDuration =
+          (4 + Math.random() * 4) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+      }
+    }
+
+
+    function toggleMusic() {
+
+      const music = document.getElementById("music");
+
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+
+
+    // Petites étoiles
+    document.querySelectorAll(".stars").forEach(container => {
+
+      for (let i = 0; i < 25; i++) {
+
+        const star = document.createElement("div");
+
+        star.className = "star";
+
+        star.innerHTML = "✦";
+
+        star.style.left = Math.random() * 100 + "%";
+
+        star.style.fontSize =
+          (8 + Math.random() * 10) + "px";
+
+        star.style.animationDuration =
+          (5 + Math.random() * 8) + "s";
+
+        star.style.animationDelay =
+          Math.random() * 5 + "s";
+
+        container.appendChild(star);
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
